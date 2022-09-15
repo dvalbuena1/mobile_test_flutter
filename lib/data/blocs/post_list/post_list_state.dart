@@ -17,7 +17,7 @@ class LoadedPostListState extends PostListState {
   final List<PostModel> posts;
   final bool hasReachedMax;
 
-  LoadedPostListState({required this.posts, required this.hasReachedMax});
+  LoadedPostListState(this.posts, this.hasReachedMax);
 
   @override
   List<Object?> get props => [posts, hasReachedMax];
@@ -26,7 +26,7 @@ class LoadedPostListState extends PostListState {
 class ErrorPostListState extends PostListState {
   final Object error;
 
-  ErrorPostListState({required this.error});
+  ErrorPostListState(this.error);
 
   @override
   List<Object?> get props => [error];

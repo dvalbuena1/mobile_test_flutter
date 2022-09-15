@@ -18,7 +18,7 @@ class LoadedPostDetailState extends PostDetailState {
   final PostModel post;
   final UserModel user;
 
-  LoadedPostDetailState({required this.post, required this.user});
+  LoadedPostDetailState(this.post, this.user);
 
   @override
   List<Object?> get props => [post, user];
@@ -27,7 +27,7 @@ class LoadedPostDetailState extends PostDetailState {
 class ErrorPostDetailState extends PostDetailState {
   final Object error;
 
-  ErrorPostDetailState({required this.error});
+  ErrorPostDetailState(this.error);
 
   @override
   List<Object?> get props => [error];
