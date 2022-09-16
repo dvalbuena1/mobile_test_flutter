@@ -14,6 +14,7 @@ class PostList extends StatefulWidget {
 class _PostListState extends State<PostList> {
   @override
   void initState() {
+    super.initState();
     BlocProvider.of<PostListCubit>(context).getPosts();
   }
 
@@ -26,19 +27,50 @@ class _PostListState extends State<PostList> {
         return Center(child: Text(state.error.toString()));
       } else if (state is LoadedPostListState) {
         final posts = state.posts;
+        final favoritePosts = state.favoritePosts;
 
-        if (posts.isEmpty) {
+        if (posts.isEmpty && favoritePosts.isEmpty) {
           return const Center(child: Text('No posts to show'));
+        }
+
+        List<dynamic> list = [];
+        list.add(const ListTile(
+          title: Text("Favorite Posts",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        ));
+        for (var i = 0; i < favoritePosts.length; i++) {
+          list.add({i: favoritePosts[i]});
+          list.add(const Divider());
+        }
+        list.add(const SizedBox(height: 20));
+        list.add(ListTile(
+          title: const Text("Posts",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          trailing: IconButton(
+              icon: const Icon(Icons.delete_forever),
+              onPressed: () {
+                print("Delete All");
+              }),
+        ));
+        for (var i = 0; i < posts.length; i++) {
+          list.add({i: posts[i]});
+          list.add(const Divider());
         }
 
         return ListView.builder(
             padding: const EdgeInsets.all(15.0),
-            itemCount: (posts.length * 2),
+            itemCount:
+                1 + (favoritePosts.length * 2) + 1 + (posts.length * 2) + 1,
             itemBuilder: (context, index) {
-              if (index.isOdd) return const Divider();
-
-              final indexTrue = index ~/ 2;
-              return _PostItem(post: posts[indexTrue]);
+              final value = list[index];
+              if (value is Widget) {
+                return value;
+              } else if (value is Map) {
+                final i = value.keys.first;
+                final post = value.values.first;
+                return _PostItem(key: UniqueKey(), post: post, index: i);
+              }
+              return const SizedBox();
             });
       } else {
         return Container();
@@ -47,28 +79,44 @@ class _PostListState extends State<PostList> {
   }
 }
 
-class _PostItem extends StatelessWidget {
+class _PostItem extends StatefulWidget {
   final PostModel post;
+  final int index;
 
-  const _PostItem({Key? key, required this.post}) : super(key: key);
+  const _PostItem({Key? key, required this.post, required this.index})
+      : super(key: key);
 
+  @override
+  State createState() => _PostItemState();
+}
+
+class _PostItemState extends State<_PostItem> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(post.title),
+      leading: Text(widget.post.id.toString()),
+      title: Text(widget.post.title),
       onTap: () {},
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          IconButton(
-              icon: const Icon(Icons.favorite_border),
-              onPressed: () {
-                print(post.id);
-              }),
+          widget.post.favorite
+              ? IconButton(
+                  icon: const Icon(Icons.star),
+                  onPressed: () {
+                    BlocProvider.of<PostListCubit>(context)
+                        .removeFavorite(widget.index);
+                  })
+              : IconButton(
+                  icon: const Icon(Icons.star_border),
+                  onPressed: () {
+                    BlocProvider.of<PostListCubit>(context)
+                        .addFavorite(widget.index);
+                  }),
           IconButton(
             icon: const Icon(Icons.delete_outline),
             onPressed: () {
-              print(post.id);
+              print(widget.post.id);
             },
           ),
         ],

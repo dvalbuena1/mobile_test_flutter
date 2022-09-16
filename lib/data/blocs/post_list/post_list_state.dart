@@ -15,12 +15,12 @@ class LoadingPostListState extends PostListState {
 
 class LoadedPostListState extends PostListState {
   final List<PostModel> posts;
-  final bool hasReachedMax;
+  final List<PostModel> favoritePosts;
 
-  LoadedPostListState(this.posts, this.hasReachedMax);
+  LoadedPostListState(this.posts, this.favoritePosts);
 
   @override
-  List<Object?> get props => [posts, hasReachedMax];
+  List<Object?> get props => [posts, favoritePosts];
 }
 
 class ErrorPostListState extends PostListState {
