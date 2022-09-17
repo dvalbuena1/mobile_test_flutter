@@ -29,6 +29,19 @@ class UserModel {
         website: json['website'],
         company: _Company.fromJson(json['company']));
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'username': username,
+      'email': email,
+      'address': address.toMap(),
+      'phone': phone,
+      'website': website,
+      'company': company.toMap(),
+    };
+  }
 }
 
 class _Address {
@@ -53,6 +66,16 @@ class _Address {
         zipcode: json['zipcode'],
         geo: _Geo.fromJson(json['geo']));
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'street': street,
+      'suite': suite,
+      'city': city,
+      'zipcode': zipcode,
+      'geo': geo.toMap(),
+    };
+  }
 }
 
 class _Geo {
@@ -63,6 +86,13 @@ class _Geo {
 
   static _Geo fromJson(Map<String, dynamic> json) {
     return _Geo(lat: json['lat'], lng: json['lng']);
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'lat': lat,
+      'lng': lng,
+    };
   }
 }
 
@@ -76,5 +106,13 @@ class _Company {
   static _Company fromJson(Map<String, dynamic> json) {
     return _Company(
         name: json['name'], catchPhrase: json['catchPhrase'], bs: json['bs']);
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'catchPhrase': catchPhrase,
+      'bs': bs,
+    };
   }
 }

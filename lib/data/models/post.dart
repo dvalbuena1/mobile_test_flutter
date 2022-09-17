@@ -24,6 +24,16 @@ class PostModel {
       favorite: json['favorite'] ?? false,
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'userId': userId,
+      'id': id,
+      'title': title,
+      'body': body,
+      'favorite': favorite ? 1 : 0,
+    };
+  }
 }
 
 class CommentModel {
@@ -47,5 +57,15 @@ class CommentModel {
         name: json['name'],
         email: json['email'],
         body: json['body']);
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'postId': postId,
+      'id': id,
+      'name': name,
+      'email': email,
+      'body': body,
+    };
   }
 }

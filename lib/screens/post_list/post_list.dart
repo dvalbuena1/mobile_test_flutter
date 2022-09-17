@@ -24,6 +24,14 @@ class _PostListState extends State<PostList> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mobile Test'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () {
+              BlocProvider.of<PostListCubit>(context).getPosts();
+            },
+          )
+        ],
       ),
       body:
           BlocBuilder<PostListCubit, PostListState>(builder: (context, state) {
