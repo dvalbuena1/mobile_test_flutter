@@ -30,13 +30,14 @@ class PostListCubit extends Cubit<PostListState> {
     }
   }
 
-  Future<void> getPosts() async {
+  Future<void> getPosts(bool fromApi) async {
     try {
       emit(LoadingPostListState());
       List<PostModel>? posts;
-      print(isOnline);
       if (isOnline) {
-        posts = await repository.getPostsOnline();
+        posts = fromApi
+            ? await repository.getPostsFromApi()
+            : await repository.getPostsOnline();
       } else {
         posts = await repository.getPostsOffline();
       }
@@ -51,7 +52,7 @@ class PostListCubit extends Cubit<PostListState> {
     }
   }
 
-  void addFavorite(int index) {
+  Future<void> addFavorite(int index) async {
     final state = this.state;
     if (state is LoadedPostListState) {
       final posts = state.posts;
@@ -59,11 +60,12 @@ class PostListCubit extends Cubit<PostListState> {
       final post = posts[index];
       post.favorite = true;
       posts.removeAt(index);
+      await repository.updatePost(post);
       emit(LoadedPostListState(posts, List.of(favoritePosts)..add(post)));
     }
   }
 
-  void removeFavorite(int index) {
+  void removeFavorite(int index) async {
     final state = this.state;
     if (state is LoadedPostListState) {
       final posts = state.posts;
@@ -71,7 +73,33 @@ class PostListCubit extends Cubit<PostListState> {
       final post = favoritePosts[index];
       post.favorite = false;
       favoritePosts.removeAt(index);
+      await repository.updatePost(post);
       emit(LoadedPostListState(List.of(posts)..insert(0, post), favoritePosts));
+    }
+  }
+
+  Future<void> deletePost(int index, bool isFavorite) async {
+    final state = this.state;
+    if (state is LoadedPostListState) {
+      final posts = state.posts;
+      final favoritePosts = state.favoritePosts;
+      if (isFavorite) {
+        await repository.deletePost(favoritePosts[index]);
+        emit(LoadedPostListState(
+            posts, List.of(favoritePosts)..removeAt(index)));
+      } else {
+        await repository.deletePost(posts[index]);
+        emit(LoadedPostListState(
+            List.of(posts)..removeAt(index), favoritePosts));
+      }
+    }
+  }
+
+  Future<void> deleteAll() async {
+    final state = this.state;
+    if (state is LoadedPostListState) {
+      await repository.deleteList(state.posts);
+      emit(LoadedPostListState(const [], state.favoritePosts));
     }
   }
 

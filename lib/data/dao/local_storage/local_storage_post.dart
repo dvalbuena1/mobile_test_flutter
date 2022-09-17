@@ -29,12 +29,18 @@ class LocalStoragePost {
     await batch.commit();
   }
 
-  Future<void> deleteByModel(PostModel post) async {
+  Future<void> update(PostModel post) async {
+    final db = await _localStorage.db;
+    await db
+        .update('Post', post.toMap(), where: 'id = ?', whereArgs: [post.id]);
+  }
+
+  Future<void> delete(PostModel post) async {
     final db = await _localStorage.db;
     await db.delete('Post', where: 'id = ?', whereArgs: [post.id]);
   }
 
-  Future<void> deleteListByModel(List<PostModel> posts) async {
+  Future<void> deleteList(List<PostModel> posts) async {
     final db = await _localStorage.db;
     final batch = db.batch();
     for (var i = 0; i < posts.length; i++) {

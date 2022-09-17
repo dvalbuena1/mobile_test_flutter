@@ -16,7 +16,7 @@ class _PostListState extends State<PostList> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<PostListCubit>(context).getPosts();
+    BlocProvider.of<PostListCubit>(context).getPosts(false);
   }
 
   @override
@@ -28,7 +28,7 @@ class _PostListState extends State<PostList> {
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () {
-              BlocProvider.of<PostListCubit>(context).getPosts();
+              BlocProvider.of<PostListCubit>(context).getPosts(true);
             },
           )
         ],
@@ -63,7 +63,7 @@ class _PostListState extends State<PostList> {
             trailing: IconButton(
                 icon: const Icon(Icons.delete_forever),
                 onPressed: () {
-                  print("Delete All");
+                  BlocProvider.of<PostListCubit>(context).deleteAll();
                 }),
           ));
           for (var i = 0; i < posts.length; i++) {
@@ -133,7 +133,8 @@ class _PostItemState extends State<_PostItem> {
           IconButton(
             icon: const Icon(Icons.delete_outline),
             onPressed: () {
-              print(widget.post.id);
+              BlocProvider.of<PostListCubit>(context)
+                  .deletePost(widget.index, widget.post.favorite);
             },
           ),
         ],
