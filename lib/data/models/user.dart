@@ -17,6 +17,18 @@ class UserModel {
       required this.phone,
       required this.website,
       required this.company});
+
+  static UserModel fromJson(Map<String, dynamic> json) {
+    return UserModel(
+        id: json['id'].toString(),
+        name: json['name'],
+        username: json['username'],
+        email: json['email'],
+        address: _Address.fromJson(json['address']),
+        phone: json['phone'],
+        website: json['website'],
+        company: _Company.fromJson(json['company']));
+  }
 }
 
 class _Address {
@@ -32,6 +44,15 @@ class _Address {
       required this.city,
       required this.zipcode,
       required this.geo});
+
+  static _Address fromJson(Map<String, dynamic> json) {
+    return _Address(
+        street: json['street'],
+        suite: json['suite'],
+        city: json['city'],
+        zipcode: json['zipcode'],
+        geo: _Geo.fromJson(json['geo']));
+  }
 }
 
 class _Geo {
@@ -39,6 +60,10 @@ class _Geo {
   final String lng;
 
   _Geo({required this.lat, required this.lng});
+
+  static _Geo fromJson(Map<String, dynamic> json) {
+    return _Geo(lat: json['lat'], lng: json['lng']);
+  }
 }
 
 class _Company {
@@ -47,4 +72,9 @@ class _Company {
   final String bs;
 
   _Company({required this.name, required this.catchPhrase, required this.bs});
+
+  static _Company fromJson(Map<String, dynamic> json) {
+    return _Company(
+        name: json['name'], catchPhrase: json['catchPhrase'], bs: json['bs']);
+  }
 }

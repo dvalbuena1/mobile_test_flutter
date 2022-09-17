@@ -5,7 +5,7 @@ class PostModel {
   final String body;
   bool favorite;
 
-  final List<CommentModel>? comments;
+  List<CommentModel>? comments;
 
   PostModel(
       {required this.userId,
@@ -17,12 +17,12 @@ class PostModel {
 
   static PostModel fromJson(Map<String, dynamic> json) {
     return PostModel(
-        userId: json['userId'],
-        id: json['id'],
-        title: json['title'],
-        body: json['body'],
-        favorite: json['favorite'] ?? false,
-        comments: null);
+      userId: json['userId'],
+      id: json['id'],
+      title: json['title'],
+      body: json['body'],
+      favorite: json['favorite'] ?? false,
+    );
   }
 }
 
@@ -39,4 +39,13 @@ class CommentModel {
       required this.name,
       required this.email,
       required this.body});
+
+  static CommentModel fromJson(Map<String, dynamic> json) {
+    return CommentModel(
+        postId: json['postId'],
+        id: json['id'],
+        name: json['name'],
+        email: json['email'],
+        body: json['body']);
+  }
 }

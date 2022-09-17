@@ -15,7 +15,7 @@ class PostListCubit extends Cubit<PostListState> {
         emit(LoadedPostListState(posts.where((p) => !p.favorite).toList(),
             posts.where((p) => p.favorite).toList()));
       } else {
-        emit(LoadedPostListState(const [], const []));
+        emit(ErrorPostListState('Something went wrong'));
       }
     } catch (e) {
       emit(ErrorPostListState(e));
