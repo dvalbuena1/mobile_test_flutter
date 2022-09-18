@@ -16,7 +16,6 @@ class ApiJsonPlaceholder {
         return null;
       }
     } on DioError catch (e) {
-      print(e);
       throw Exception(e.message);
     }
   }
@@ -30,7 +29,6 @@ class ApiJsonPlaceholder {
         return null;
       }
     } on DioError catch (e) {
-      print(e);
       throw Exception(e.message);
     }
   }
@@ -47,7 +45,6 @@ class ApiJsonPlaceholder {
         return null;
       }
     } on DioError catch (e) {
-      print(e);
       throw Exception(e.message);
     }
   }

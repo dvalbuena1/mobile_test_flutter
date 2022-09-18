@@ -14,7 +14,6 @@ class ConnectivityCubit extends Cubit<ConnectivityState> {
   void listenConnectivity() {
     connectivityStreamSubscription =
         connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
-          print("Connectivity: $result");
       setConnectivityState(result);
     });
   }

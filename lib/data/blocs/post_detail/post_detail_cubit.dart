@@ -51,8 +51,7 @@ class PostDetailCubit extends Cubit<PostDetailState> {
       } else {
         emit(ErrorPostDetailState('Something went wrong'));
       }
-    } catch (e, s) {
-      print(s);
+    } catch (e) {
       emit(ErrorPostDetailState(e));
     }
   }
