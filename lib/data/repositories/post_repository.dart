@@ -19,7 +19,7 @@ class PostRepository {
     if (dbList.isNotEmpty) {
       return dbList;
     } else {
-      return getPostsFromApi();
+      return await getPostsFromApi();
     }
   }
 

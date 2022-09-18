@@ -12,12 +12,12 @@ class PostListCubit extends Cubit<PostListState> {
   late StreamSubscription connectivityStreamSubscription;
   late bool isOnline;
 
-  PostRepository repository = PostRepository();
+  final PostRepository repository;
 
-  PostListCubit({required this.connectivityCubit})
+  PostListCubit({required this.connectivityCubit, required this.repository})
       : super(InitialPostListState()) {
     setConnectionState(connectivityCubit.state);
-    connectivityCubit.stream.listen((state) {
+    connectivityStreamSubscription = connectivityCubit.stream.listen((state) {
       setConnectionState(state);
     });
   }

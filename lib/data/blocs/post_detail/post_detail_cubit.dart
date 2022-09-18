@@ -14,13 +14,16 @@ class PostDetailCubit extends Cubit<PostDetailState> {
   late StreamSubscription connectivityStreamSubscription;
   late bool isOnline;
 
-  UserRepository userRepository = UserRepository();
-  CommentRepository commentRepository = CommentRepository();
+  final UserRepository userRepository;
+  final CommentRepository commentRepository;
 
-  PostDetailCubit({required this.connectivityCubit})
+  PostDetailCubit(
+      {required this.connectivityCubit,
+      required this.userRepository,
+      required this.commentRepository})
       : super(InitialPostDetailState()) {
     setConnectionState(connectivityCubit.state);
-    connectivityCubit.stream.listen((state) {
+    connectivityStreamSubscription = connectivityCubit.stream.listen((state) {
       setConnectionState(state);
     });
   }

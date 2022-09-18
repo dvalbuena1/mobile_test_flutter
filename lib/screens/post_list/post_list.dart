@@ -82,7 +82,7 @@ class _PostListState extends State<PostList> {
                 } else if (value is Map) {
                   final i = value.keys.first;
                   final post = value.values.first;
-                  return _PostItem(key: UniqueKey(), post: post, index: i);
+                  return PostItem(key: UniqueKey(), post: post, index: i);
                 }
                 return const SizedBox();
               });
@@ -94,18 +94,18 @@ class _PostListState extends State<PostList> {
   }
 }
 
-class _PostItem extends StatefulWidget {
+class PostItem extends StatefulWidget {
   final PostModel post;
   final int index;
 
-  const _PostItem({Key? key, required this.post, required this.index})
+  const PostItem({Key? key, required this.post, required this.index})
       : super(key: key);
 
   @override
-  State createState() => _PostItemState();
+  State createState() => PostItemState();
 }
 
-class _PostItemState extends State<_PostItem> {
+class PostItemState extends State<PostItem> {
   @override
   Widget build(BuildContext context) {
     return ListTile(

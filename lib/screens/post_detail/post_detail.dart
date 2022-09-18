@@ -55,9 +55,9 @@ class _PostDetailState extends State<PostDetail> {
                         Text(widget.post.body,
                             style: const TextStyle(fontSize: 16.0)),
                         const SizedBox(height: 20.0),
-                        _UserInfo(user: user),
+                        UserInfo(user: user),
                         const SizedBox(height: 50.0),
-                        _Comments(comments: widget.post.comments ?? []),
+                        Comments(comments: widget.post.comments ?? []),
                       ],
                     )),
               );
@@ -69,10 +69,10 @@ class _PostDetailState extends State<PostDetail> {
   }
 }
 
-class _UserInfo extends StatelessWidget {
+class UserInfo extends StatelessWidget {
   final UserModel user;
 
-  const _UserInfo({Key? key, required this.user}) : super(key: key);
+  const UserInfo({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -88,10 +88,10 @@ class _UserInfo extends StatelessWidget {
   }
 }
 
-class _Comments extends StatelessWidget {
+class Comments extends StatelessWidget {
   final List<CommentModel> comments;
 
-  const _Comments({Key? key, required this.comments}) : super(key: key);
+  const Comments({Key? key, required this.comments}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
