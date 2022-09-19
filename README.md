@@ -2,6 +2,8 @@
 
 Lists all messages and their details from JSONPlaceholder
 
+**Flutter version 2.10.5**
+
 ## Dependencies
 
 - [flutter_bloc](https://pub.dev/packages/flutter_bloc)  Library that allows the management of states in a simple and well-structured way
